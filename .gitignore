@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.dll
+
+# Virtual environment
+venv/
+env/
+
+# Flask environment variables
+.env
+*.env
+instance/
+
+# Logs
+logs/
+*.log
+nohup.out
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Generated Excel files
+modified.xlsx
+
+# Python package files
+*.egg
+*.egg-info/
+dist/
+build/
