@@ -1,0 +1,157 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Simple Application To Read And Write Excel File",
+    "version": "1.0.0",
+    "title": "Read/Write Excel API Documentation",
+    "license": {
+      "name": "NA",
+      "url": "https://NA"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "components": {
+    "schemas":  {
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "billTo": { "type": "string" },
+          "phone": { "type": "string" },
+          "invoice": { "type": "string" },
+          "invoiceDate": { "type": "string", "format": "date" },
+          "fax": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "address": { "type": "string" },
+          "invoiceFor": { "type": "string" },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceItem"
+            }
+          }
+        }
+      },
+      "InvoiceItem": {
+        "type": "object",
+        "properties": {
+          "itemNumber": { "type": "integer" },
+          "description": { "type": "string" },
+          "qty": { "type": "integer" },
+          "unitPrice": { "type": "number" },
+          "discount": { "type": "number" }
+        }
+      }
+    }
+  },
+    "paths": {
+      "/read-excel": {
+        "get": {
+          "tags": [
+            "Read Excel File With Name"
+          ],
+          "summary": "Its Reading Excel",
+          "parameters": [
+            {
+              "name": "FileName",
+              "in": "path",
+              "description": "Excel File Name",
+              "required": true,
+              "type": "string",
+              "schema": {
+                "$ref": "#/components/schemas/FileName"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/FileName"
+              }
+            },
+            "404": {
+              "description": "NOT FOUND",
+              "schema": {
+                "$ref": "#/components/schemas/FileName"
+              }
+            }
+          }
+        }
+      },
+"/write-excel": {
+    "post": {
+      "tags": [
+        "Excel Operations"
+      ],
+      "summary": "Write data to Excel",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Invoice"
+            },
+            "example": {
+              "billTo": "John Doe",
+              "phone": "+1-234-567-8901",
+              "invoice": "INV-2025001",
+              "invoiceDate": "2025-02-16",
+              "fax": "+1-234-567-8902",
+              "email": "johndoe@example.com",
+              "address": "123 Main St, City, Country",
+              "invoiceFor": "Medicinal Purchase",
+              "discount": 10,
+              "items": [
+                {
+                  "itemNumber": 1001,
+                  "description": "Pain Reliever",
+                  "qty": 5,
+                  "unitPrice": 50.0,
+                  "discount": 5
+                },
+                {
+                  "itemNumber": 1002,
+                  "description": "Vitamin C Tablets",
+                  "qty": 10,
+                  "unitPrice": 30.0
+                }
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successfully written to Excel",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Invalid input"
+        },
+        "500": {
+          "description": "Internal server error"
+        }
+      }
+    }
+  }
+    }
+  }
+
